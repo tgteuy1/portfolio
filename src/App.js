@@ -1,35 +1,42 @@
 import { useState } from 'react';
 import './App.css';
 
-// ใส่ GitHub repo ของแต่ละโปรเจกต์ที่นี่
+// ===== ใส่รูปที่ต้องการแสดงตรงนี้ =====
+// import myImage from './picture/ชื่อไฟล์.jpg';
+
+// ใส่ข้อมูลแต่ละโปรเจกต์ที่นี่
 const projects = [
   {
     label: "OCR Website",
-    repo: "tgteuy1/OCR-Thai-Text",   // เปลี่ยนเป็น user/repo จริง
+    repo: "tgteuy1/OCR-Thai-Text",
     style: "btn-primary",
   },
   {
     label: "Portfolio Website",
-    repo: "tgteuy1/portfolio",         // เปลี่ยนเป็น user/repo จริง
+    repo: "tgteuy1/portfolio",
     style: "btn-secondary",
   },
 ];
 
 export default function App() {
-  const [selected, setSelected] = useState(null);  // เก็บปุ่มที่กด
-  const [repoData, setRepoData] = useState(null);  // ข้อมูลจาก GitHub API
+  const [selected, setSelected] = useState(null);    // ปุ่มที่กด
+  const [repoData, setRepoData] = useState(null);    // ข้อมูล GitHub API
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showScreenshot, setShowScreenshot] = useState(false); // เปิด/ปิดรูป
+  const [galleryOpen, setGalleryOpen] = useState(false); // dropdown รูป A4
 
   async function handleProjectClick(project) {
-    // ถ้ากดซ้ำ → ปิด
+    // กดซ้ำปุ่มเดิม → ปิดทั้งหมด
     if (selected === project.repo) {
       setSelected(null);
       setRepoData(null);
+      setShowScreenshot(false);
       return;
     }
 
     setSelected(project.repo);
+    setShowScreenshot(false); // รีเซ็ตรูปก่อนโหลดใหม่
     setLoading(true);
     setError(null);
     setRepoData(null);
@@ -55,7 +62,9 @@ export default function App() {
 
         {/* AVATAR */}
         <div className="card avatar-card">
-          <div className="art-placeholder"><img src={require('./picture/me2.jpg')} className="me-art" alt="Avatar" /></div>
+          <div className="art-placeholder">
+            <img src={require('./picture/me2.jpg')} className="me-art" alt="Avatar" />
+          </div>
         </div>
 
         {/* PROFILE */}
@@ -94,15 +103,15 @@ export default function App() {
               <span className="contact-icon">⬡</span>
               <span className="contact-text">github.com/tgteuy1</span>
             </a>
-            <a className="contact-item" href="mailto:tgteuy1@email.com">
+            <a className="contact-item" href="mailto:tgteuy1@gmail.com">
               <span className="contact-icon">◉</span>
               <span className="contact-text">tgteuy1@gmail.com</span>
             </a>
-            <a className="contact-item" >
+            <a className="contact-item">
               <span className="contact-icon">▣</span>
               <span className="contact-text">0967705364</span>
             </a>
-            <a className="contact-item" href="https://www.facebook.com/teuy.kung.58/" target="_blank" rel="noreferrer">
+            <a className="contact-item" href="https://https://www.facebook.com/teuy.kung.58/.com/users/yourid" target="_blank" rel="noreferrer">
               <span className="contact-icon">◎</span>
               <span className="contact-text">ทะนากะระ กลิ่นหวล</span>
             </a>
@@ -216,7 +225,7 @@ export default function App() {
               <label>BACKEND</label>
               <div className="skill-tags">
                 <span className="skill-tag">NODE.JS</span>
-                <span className="skill-tag">POSTGRESQL</span>
+                <span className="skill-tag">MysQL</span>
               </div>
             </div>
 
@@ -231,6 +240,24 @@ export default function App() {
             </div>
 
           </div>
+        </div>
+
+        {/* GALLERY DROPDOWN */}
+        <div className="card gallery-card">
+          <button
+            className="gallery-toggle"
+            onClick={() => setGalleryOpen(!galleryOpen)}
+          >
+            <span> Transcript </span>
+            <span className={`gallery-arrow ${galleryOpen ? "open" : ""}`}>▾</span>
+          </button>
+
+          {galleryOpen && (
+            <div className="gallery-panel">
+              {/* เปลี่ยนเป็น: <img src={myImage} alt="my photo" className="a4-image" /> */}
+                <img src={require('./picture/transcript.png')} alt="Photo" className="a4-image" />
+            </div>
+          )}
         </div>
 
       </div>
