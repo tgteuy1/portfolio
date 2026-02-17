@@ -59,7 +59,7 @@ export default function App() {
         <div className="card about-card">
           <div className="about-title">It's Me!</div>
           <div className="about-photo-frame">
-            <img src={require('./picture/ellen-joe-ellen.gif')} alt="Photo" />
+            <img src={require('./picture/ellen-joe-ellen.gif')} alt="Ellen Joe" />
           </div>
           <p className="about-text">
             A CS student, my passion lies in the craft of building elegant,
