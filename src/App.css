@@ -1,38 +1,612 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap');
+
+/* ===========================
+   VARIABLES
+=========================== */
+:root {
+  --bg:           #1a1c14;
+  --card:         #252718;
+  --card-green:   #2d3020;
+  --border:       #3a3e28;
+  --accent:       #8a9a5b;
+  --accent-light: #b5c46a;
+  --text:         #e8e4d0;
+  --text-dim:     #8a8878;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --font-body:    'Syne', sans-serif;
+
+  --radius: 12px;
+  --gap:    12px;
+}
+
+/* ===========================
+   BASE
+=========================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+/* ===========================
+   PAGE WRAPPER
+=========================== */
+.portfolio-root {
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.top-label {
+  position: fixed;
+  top: 16px; right: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+/* ===========================
+   BENTO GRID
+=========================== */
+.bento {
+  display: grid;
+  grid-template-columns: 220px 1fr 200px 180px;
+  gap: var(--gap);
+  max-width: 1080px;
+  width: 100%;
+  align-content: start;
+}
+
+/* Fade-in animation for each card */
+.bento > * {
+  animation: fadeUp 0.5s ease forwards;
+}
+.bento > *:nth-child(1) { animation-delay: 0.05s; }
+.bento > *:nth-child(2) { animation-delay: 0.10s; }
+.bento > *:nth-child(3) { animation-delay: 0.15s; }
+.bento > *:nth-child(4) { animation-delay: 0.20s; }
+.bento > *:nth-child(5) { animation-delay: 0.25s; }
+.bento > *:nth-child(6) { animation-delay: 0.30s; }
+.bento > *:nth-child(7) { animation-delay: 0.35s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.me-art {
+  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0;
+  object-fit: cover;
+  filter: sepia(20%) saturate(80%);
+}
+
+/* ===========================
+   CARD — shared base
+=========================== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Small label above content (e.g. "About", "Preview") */
+.card-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.card-label::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ===========================
+   GRID PLACEMENT
+   (which card goes where)
+=========================== */
+.avatar-card          { grid-column: 1;     grid-row: 1 / 3; }
+.profile-card         { grid-column: 2 / 4; grid-row: 1; }
+.about-card           { grid-column: 4;     grid-row: 1 / 3; }
+.contact-card         { grid-column: 1;     grid-row: 3; }
+.note-app-card        { grid-column: 2;     grid-row: 2 / 4; }
+.hire-card            { grid-column: 3;     grid-row: 2; }
+.skills-card          { grid-column: 3 / 5; grid-row: 3; }
+
+/* ===========================
+   AVATAR CARD
+=========================== */
+.avatar-card {
+  padding: 0;
+  min-height: 300px;
+  background: var(--card-green);
+}
+
+.anime-art {
+  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0;
+  object-fit: cover;
+  filter: sepia(20%) saturate(80%);
+}
+
+.art-placeholder {
+  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0;
+  display: flex;
+  align-items: center; justify-content: center;
+  font-size: 5rem;
+  background: linear-gradient(180deg, #2a2d1a, #1a1c10);
+}
+
+/* ===========================
+   PROFILE CARD
+=========================== */
+.profile-card {
+  background: linear-gradient(135deg, #2d3322, var(--card));
+}
+
+.profile-name {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  letter-spacing: 3px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.profile-name span { color: var(--accent-light); }
+
+.profile-role {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.profile-tagline {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  white-space: pre-line;
+  padding-left: 10px;
+  border-left: 2px solid var(--accent);
+  margin-bottom: 10px;
+}
+
+.profile-quote {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-style: italic;
+  white-space: pre-line;
+  margin-bottom: 14px;
+  opacity: 0.9;
+}
+
+/* Social icon buttons */
+.social-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.social-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center; justify-content: center;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.social-btn:hover {
+  border-color: var(--accent-light);
+  background: var(--card-green);
+  color: var(--accent-light);
+}
+
+/* ===========================
+   ABOUT ME CARD
+=========================== */
+.about-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.about-title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  letter-spacing: 4px;
+  line-height: 1.1;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.about-photo-frame {
+  flex: 1;
+  min-height: 120px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--bg);
+  display: flex;
+  align-items: center; justify-content: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.about-photo-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(30%) sepia(10%);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.about-photo-placeholder {
+  width: 100%;
+  min-height: 120px;
+  display: flex;
+  align-items: center; justify-content: center;
+  font-size: 3rem;
+}
+
+.about-text {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ===========================
+   CONTACT CARD
+=========================== */
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #161810;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.contact-item:hover {
+  border-color: var(--accent-light);
+  background: var(--card-green);
+}
+
+.contact-icon {
+  font-size: 0.9rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.contact-text {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contact-item:hover .contact-text { color: var(--accent-light); }
+
+/* ===========================
+   NOTE APP CARD
+=========================== */
+.note-app-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+}
+
+/* Tech stack tags */
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+
+.tag {
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #1a1c10;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Action buttons */
+.btn-row { display: flex; gap: 8px; margin-top: 6px; }
+
+.btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  transition: all 0.2s;
+}
+
+.btn-primary         { background: var(--text); color: var(--bg); }
+.btn-primary:hover   { background: var(--accent-light); }
+.btn-secondary       { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--accent); }
+
+/* ปุ่มที่กำลัง active */
+.btn-active {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+/* ===========================
+   REPO PREVIEW (ใน note-app-card)
+=========================== */
+.repo-preview {
+  flex: 1;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #161810;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80px;
+}
+
+.repo-hint {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.repo-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+}
+
+.repo-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent-light);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.repo-error {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #f87171;
+  text-align: center;
+}
+
+/* กล่องข้อมูล repo */
+.repo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: fadeUp 0.3s ease;
+}
+
+.repo-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.repo-icon {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.repo-name {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-light);
+  text-decoration: none;
+}
+
+.repo-name:hover { text-decoration: underline; }
+
+.repo-visibility {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  padding: 1px 6px;
+  border-radius: 100px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.repo-desc {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.repo-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+}
+
+.repo-updated {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  opacity: 0.6;
+}
+
+/* ===========================
+   HIRE ME CARD
+=========================== */
+.hire-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  background: linear-gradient(135deg, #3d4a20, #2d3620);
 }
 
-.App-link {
-  color: #61dafb;
+/* Subtle glow overlay */
+.hire-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50%, rgba(181,196,106,0.15), transparent 70%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hire-avatar-mini {
+  position: relative;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: #4a5228;
+  border: 2px solid var(--accent-light);
+  display: flex;
+  align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.hire-text {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  color: var(--accent-light);
+}
+
+.hire-sub {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* ===========================
+   SKILLS CARD
+=========================== */
+.skills-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.skill-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.skill-tag {
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: #1a1c10;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--text);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: default;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.skill-tag:hover {
+  border-color: var(--accent-light);
+  color: var(--accent-light);
+}
+
+/* ===========================
+   RESPONSIVE (mobile)
+=========================== */
+@media (max-width: 768px) {
+  .bento { grid-template-columns: 1fr 1fr; }
+
+  .avatar-card  { grid-column: 1;     grid-row: 1; min-height: 200px; }
+  .profile-card { grid-column: 2;     grid-row: 1; }
+  .about-card   { grid-column: 1 / 3; grid-row: 2; }
+  .contact-card { grid-column: 1;     grid-row: 3; }
+  .note-app-card{ grid-column: 2;     grid-row: 3; }
+  .hire-card    { grid-column: 1;     grid-row: 4; }
+  .skills-card  { grid-column: 1 / 3; grid-row: 5; }
 }
