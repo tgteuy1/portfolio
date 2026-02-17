@@ -70,13 +70,6 @@ export default function App() {
           <p className="profile-quote">
             "Break things, learn from them, build better."
           </p>
-          <div className="social-row">
-            <button className="social-btn" title="GitHub">⬡</button>
-            <button className="social-btn" title="Twitter">◈</button>
-            <button className="social-btn" title="LinkedIn">▣</button>
-            <button className="social-btn" title="Discord">◎</button>
-            <button className="social-btn" title="Email">◉</button>
-          </div>
         </div>
 
         {/* ABOUT ME */}
@@ -101,17 +94,17 @@ export default function App() {
               <span className="contact-icon">⬡</span>
               <span className="contact-text">github.com/tgteuy1</span>
             </a>
-            <a className="contact-item" href="mailto:your@email.com">
+            <a className="contact-item" href="mailto:tgteuy1@email.com">
               <span className="contact-icon">◉</span>
-              <span className="contact-text">your@email.com</span>
+              <span className="contact-text">tgteuy1@gmail.com</span>
             </a>
-            <a className="contact-item" href="https://linkedin.com/in/yourprofile" target="_blank" rel="noreferrer">
+            <a className="contact-item" >
               <span className="contact-icon">▣</span>
-              <span className="contact-text">linkedin.com/in/you</span>
+              <span className="contact-text">0967705364</span>
             </a>
-            <a className="contact-item" href="https://discord.com/users/yourid" target="_blank" rel="noreferrer">
+            <a className="contact-item" href="https://www.facebook.com/teuy.kung.58/" target="_blank" rel="noreferrer">
               <span className="contact-icon">◎</span>
-              <span className="contact-text">Discord</span>
+              <span className="contact-text">ทะนากะระ กลิ่นหวล</span>
             </a>
           </div>
         </div>

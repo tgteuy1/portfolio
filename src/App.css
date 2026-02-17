@@ -210,9 +210,6 @@ body {
   opacity: 0.9;
 }
 
-/* Social icon buttons */
-.social-row { display: flex; gap: 10px; flex-wrap: wrap; }
-
 .social-btn {
   width: 34px; height: 34px;
   border-radius: 8px;
