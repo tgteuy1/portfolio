@@ -33,7 +33,7 @@ body {
 }
 
 /* ===========================
-   PAGE WRAPPER
+   PAGE & GRID
 =========================== */
 .portfolio-root {
   min-height: 100vh;
@@ -42,20 +42,6 @@ body {
   justify-content: center;
 }
 
-.top-label {
-  position: fixed;
-  top: 16px; right: 24px;
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--text-dim);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  z-index: 10;
-}
-
-/* ===========================
-   BENTO GRID
-=========================== */
 .bento {
   display: grid;
   grid-template-columns: 220px 1fr 200px 180px;
@@ -65,10 +51,18 @@ body {
   align-content: start;
 }
 
-/* Fade-in animation for each card */
-.bento > * {
-  animation: fadeUp 0.5s ease forwards;
-}
+/* Grid placement */
+.avatar-card    { grid-column: 1;     grid-row: 1 / 3; }
+.profile-card   { grid-column: 2 / 4; grid-row: 1; }
+.about-card     { grid-column: 4;     grid-row: 1 / 3; }
+.contact-card   { grid-column: 1;     grid-row: 3; }
+.note-app-card  { grid-column: 2;     grid-row: 2 / 4; }
+.hire-card      { grid-column: 3;     grid-row: 2; }
+.skills-card    { grid-column: 3 / 5; grid-row: 3; }
+.transcript-card { grid-column: 1 / 5; grid-row: 4; }
+
+/* Fade-in per card */
+.bento > * { animation: fadeUp 0.5s ease both; }
 .bento > *:nth-child(1) { animation-delay: 0.05s; }
 .bento > *:nth-child(2) { animation-delay: 0.10s; }
 .bento > *:nth-child(3) { animation-delay: 0.15s; }
@@ -76,6 +70,7 @@ body {
 .bento > *:nth-child(5) { animation-delay: 0.25s; }
 .bento > *:nth-child(6) { animation-delay: 0.30s; }
 .bento > *:nth-child(7) { animation-delay: 0.35s; }
+.bento > *:nth-child(8) { animation-delay: 0.40s; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
@@ -83,7 +78,7 @@ body {
 }
 
 /* ===========================
-   CARD — shared base
+   CARD BASE
 =========================== */
 .card {
   background: var(--card);
@@ -100,7 +95,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Small label above content (e.g. "About", "Preview") */
 .card-label {
   display: flex;
   align-items: center;
@@ -122,19 +116,6 @@ body {
 }
 
 /* ===========================
-   GRID PLACEMENT
-   (which card goes where)
-=========================== */
-.avatar-card          { grid-column: 1;     grid-row: 1 / 3; }
-.profile-card         { grid-column: 2 / 4; grid-row: 1; }
-.about-card           { grid-column: 4;     grid-row: 1 / 3; }
-.contact-card         { grid-column: 1;     grid-row: 3; }
-.note-app-card        { grid-column: 2;     grid-row: 2 / 4; }
-.hire-card            { grid-column: 3;     grid-row: 2; }
-.skills-card          { grid-column: 3 / 5; grid-row: 3; }
-.gallery-card         { grid-column: 1 / 5; grid-row: 4; }
-
-/* ===========================
    AVATAR CARD
 =========================== */
 .avatar-card {
@@ -147,16 +128,6 @@ body {
   width: 100%; height: 100%;
   position: absolute; top: 0; left: 0;
   object-fit: cover;
-  filter: sepia(20%) saturate(80%);
-}
-
-.art-placeholder {
-  width: 100%; height: 100%;
-  position: absolute; top: 0; left: 0;
-  display: flex;
-  align-items: center; justify-content: center;
-  font-size: 5rem;
-  background: linear-gradient(180deg, #2a2d1a, #1a1c10);
 }
 
 /* ===========================
@@ -199,28 +170,7 @@ body {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-style: italic;
-  white-space: pre-line;
-  margin-bottom: 14px;
   opacity: 0.9;
-}
-
-.social-btn {
-  width: 34px; height: 34px;
-  border-radius: 8px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center; justify-content: center;
-  transition: border-color 0.2s, background 0.2s, color 0.2s;
-}
-
-.social-btn:hover {
-  border-color: var(--accent-light);
-  background: var(--card-green);
-  color: var(--accent-light);
 }
 
 /* ===========================
@@ -236,7 +186,6 @@ body {
   font-family: var(--font-display);
   font-size: 2.4rem;
   letter-spacing: 4px;
-  line-height: 1.1;
   text-align: center;
 }
 
@@ -246,7 +195,6 @@ body {
   border-radius: 8px;
   border: 1px solid var(--border);
   overflow: hidden;
-  background: var(--bg);
   display: flex;
   align-items: center; justify-content: center;
 }
@@ -254,15 +202,6 @@ body {
 .about-photo-frame img {
   width: 100%; height: 100%;
   object-fit: cover;
-  filter: grayscale(30%) sepia(10%);
-}
-
-.about-photo-placeholder {
-  width: 100%;
-  min-height: 120px;
-  display: flex;
-  align-items: center; justify-content: center;
-  font-size: 3rem;
 }
 
 .about-text {
@@ -285,7 +224,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-top: 4px;
 }
 
 .contact-item {
@@ -297,6 +235,7 @@ body {
   background: #161810;
   border: 1px solid var(--border);
   text-decoration: none;
+  cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
 }
 
@@ -305,11 +244,7 @@ body {
   background: var(--card-green);
 }
 
-.contact-icon {
-  font-size: 0.9rem;
-  color: var(--accent);
-  flex-shrink: 0;
-}
+.contact-icon { font-size: 0.9rem; color: var(--accent); flex-shrink: 0; }
 
 .contact-text {
   font-family: var(--font-mono);
@@ -323,7 +258,7 @@ body {
 .contact-item:hover .contact-text { color: var(--accent-light); }
 
 /* ===========================
-   NOTE APP CARD
+   PROJECT CARD
 =========================== */
 .note-app-card {
   display: flex;
@@ -337,23 +272,7 @@ body {
   letter-spacing: 3px;
 }
 
-/* Tech stack tags */
-.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-
-.tag {
-  padding: 3px 8px;
-  border-radius: 4px;
-  background: #1a1c10;
-  border: 1px solid var(--border);
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  color: var(--text-dim);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-/* Action buttons */
-.btn-row { display: flex; gap: 8px; margin-top: 6px; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .btn {
   padding: 6px 14px;
@@ -371,19 +290,11 @@ body {
 .btn-primary:hover   { background: var(--accent-light); }
 .btn-secondary       { background: transparent; color: var(--text); border: 1px solid var(--border); }
 .btn-secondary:hover { border-color: var(--accent); }
+.btn-active          { outline: 2px solid var(--accent-light); outline-offset: 2px; }
 
-/* ปุ่มที่กำลัง active */
-.btn-active {
-  outline: 2px solid var(--accent-light);
-  outline-offset: 2px;
-}
-
-/* ===========================
-   REPO PREVIEW (ใน note-app-card)
-=========================== */
+/* Repo preview box */
 .repo-preview {
   flex: 1;
-  margin-top: 10px;
   border-radius: 8px;
   border: 1px solid var(--border);
   background: #161810;
@@ -394,12 +305,14 @@ body {
   min-height: 80px;
 }
 
-.repo-hint {
+.repo-hint, .repo-error {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--text-dim);
   text-align: center;
 }
+
+.repo-error { color: #f87171; }
 
 .repo-loading {
   display: flex;
@@ -419,36 +332,13 @@ body {
   animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.repo-error {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: #f87171;
-  text-align: center;
-}
+.repo-card { display: flex; flex-direction: column; gap: 6px; animation: fadeUp 0.3s ease; }
 
-/* กล่องข้อมูล repo */
-.repo-card {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  animation: fadeUp 0.3s ease;
-}
+.repo-header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-.repo-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.repo-icon {
-  color: var(--accent);
-  font-size: 0.9rem;
-}
+.repo-icon { color: var(--accent); font-size: 0.9rem; }
 
 .repo-name {
   font-family: var(--font-mono);
@@ -457,7 +347,6 @@ body {
   color: var(--accent-light);
   text-decoration: none;
 }
-
 .repo-name:hover { text-decoration: underline; }
 
 .repo-visibility {
@@ -471,11 +360,7 @@ body {
   letter-spacing: 1px;
 }
 
-.repo-desc {
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  line-height: 1.5;
-}
+.repo-desc { font-size: 0.72rem; color: var(--text-dim); line-height: 1.5; }
 
 .repo-stats {
   display: flex;
@@ -497,58 +382,23 @@ body {
    HIRE ME CARD
 =========================== */
 .hire-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: linear-gradient(135deg, #3d4a20, #2d3620);
+  padding: 0;
+  overflow: hidden;
+  background: var(--card-green);
 }
 
-/* Subtle glow overlay */
-.hire-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 50%, rgba(181,196,106,0.15), transparent 70%);
-}
-
-.hire-avatar-mini {
-  position: relative;
-  width: 50px; height: 50px;
-  border-radius: 50%;
-  background: #4a5228;
-  border: 2px solid var(--accent-light);
-  display: flex;
-  align-items: center; justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 8px;
-}
-
-.hire-text {
-  position: relative;
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  letter-spacing: 3px;
-  color: var(--accent-light);
-}
-
-.hire-sub {
-  position: relative;
-  font-family: var(--font-mono);
-  font-size: 0.55rem;
-  color: var(--accent);
-  letter-spacing: 1px;
-  margin-top: 2px;
+.hire-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0; left: 0;
 }
 
 /* ===========================
    SKILLS CARD
 =========================== */
-.skills-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.skills-card { display: flex; flex-direction: column; gap: 10px; }
 
 .skills-grid {
   display: grid;
@@ -576,27 +426,18 @@ body {
   font-family: var(--font-mono);
   font-size: 0.58rem;
   color: var(--text);
-  letter-spacing: 0.5px;
   text-transform: uppercase;
   cursor: default;
   transition: border-color 0.2s, color 0.2s;
 }
 
-.skill-tag:hover {
-  border-color: var(--accent-light);
-  color: var(--accent-light);
-}
+.skill-tag:hover { border-color: var(--accent-light); color: var(--accent-light); }
 
 /* ===========================
-   GALLERY DROPDOWN CARD
+   TRANSCRIPT DROPDOWN
 =========================== */
-.gallery-card {
-  grid-column: 1 / 5;  /* ยาวเต็มแถว */
-  padding: 0;
-  overflow: visible;
-}
+.transcript-card { padding: 0; overflow: visible; }
 
-/* ปุ่มยาวเต็ม */
 .gallery-toggle {
   width: 100%;
   padding: 14px 20px;
@@ -620,9 +461,7 @@ body {
   background: var(--card-green);
 }
 
-/* ลูกศร หมุนตอนเปิด */
 .gallery-arrow {
-  font-size: 1.1rem;
   color: var(--accent);
   transition: transform 0.3s ease;
   display: inline-block;
@@ -630,13 +469,8 @@ body {
 
 .gallery-arrow.open { transform: rotate(180deg); }
 
-/* พื้นที่แสดงรูป */
 .gallery-panel {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
+  padding: 16px;
   margin-top: 8px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -644,59 +478,25 @@ body {
   animation: fadeUp 0.3s ease;
 }
 
-/* กรอบ A4 (สัดส่วน 210:297 = 1:1.414) */
-.a4-frame {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
 .a4-image {
   width: 100%;
   height: auto;
-  border: 1px solid var(--border);
   border-radius: 4px;
-  background: #fff;
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
 
-.a4-label {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--text-dim);
-  letter-spacing: 1px;
-}
-
-.gallery-empty {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  text-align: center;
-  padding: 20px;
-}
-
-.gallery-empty code {
-  color: var(--accent-light);
-  background: #1a1c10;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
 /* ===========================
-   RESPONSIVE (mobile)
+   RESPONSIVE
 =========================== */
 @media (max-width: 768px) {
   .bento { grid-template-columns: 1fr 1fr; }
 
-  .avatar-card  { grid-column: 1;     grid-row: 1; min-height: 200px; }
-  .profile-card { grid-column: 2;     grid-row: 1; }
-  .about-card   { grid-column: 1 / 3; grid-row: 2; }
-  .contact-card { grid-column: 1;     grid-row: 3; }
-  .note-app-card{ grid-column: 2;     grid-row: 3; }
-  .hire-card    { grid-column: 1;     grid-row: 4; }
-  .skills-card  { grid-column: 1 / 3; grid-row: 5; }
-  .gallery-card { grid-column: 1 / 3; grid-row: 6; }
-
-  .a4-image { width: 100%; height: auto; }
+  .avatar-card     { grid-column: 1;     grid-row: 1; min-height: 200px; }
+  .profile-card    { grid-column: 2;     grid-row: 1; }
+  .about-card      { grid-column: 1 / 3; grid-row: 2; }
+  .contact-card    { grid-column: 1;     grid-row: 3; }
+  .note-app-card   { grid-column: 2;     grid-row: 3; }
+  .hire-card       { grid-column: 1;     grid-row: 4; }
+  .skills-card     { grid-column: 1 / 3; grid-row: 5; }
+  .transcript-card { grid-column: 1 / 3; grid-row: 6; }
 }

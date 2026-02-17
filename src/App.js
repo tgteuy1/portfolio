@@ -1,51 +1,32 @@
 import { useState } from 'react';
 import './App.css';
 
-// ===== ใส่รูปที่ต้องการแสดงตรงนี้ =====
-// import myImage from './picture/ชื่อไฟล์.jpg';
-
-// ใส่ข้อมูลแต่ละโปรเจกต์ที่นี่
 const projects = [
-  {
-    label: "OCR Website",
-    repo: "tgteuy1/OCR-Thai-Text",
-    style: "btn-primary",
-  },
-  {
-    label: "Portfolio Website",
-    repo: "tgteuy1/portfolio",
-    style: "btn-secondary",
-  },
+  { label: "OCR Website",       repo: "tgteuy1/OCR-Thai-Text", style: "btn-primary" },
+  { label: "Portfolio Website", repo: "tgteuy1/portfolio",      style: "btn-secondary" },
 ];
 
 export default function App() {
-  const [selected, setSelected] = useState(null);    // ปุ่มที่กด
-  const [repoData, setRepoData] = useState(null);    // ข้อมูล GitHub API
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [showScreenshot, setShowScreenshot] = useState(false); // เปิด/ปิดรูป
-  const [galleryOpen, setGalleryOpen] = useState(false); // dropdown รูป A4
+  const [selected, setSelected]     = useState(null);
+  const [repoData, setRepoData]     = useState(null);
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState(null);
+  const [transcriptOpen, setTranscriptOpen] = useState(false);
 
   async function handleProjectClick(project) {
-    // กดซ้ำปุ่มเดิม → ปิดทั้งหมด
     if (selected === project.repo) {
       setSelected(null);
       setRepoData(null);
-      setShowScreenshot(false);
       return;
     }
-
     setSelected(project.repo);
-    setShowScreenshot(false); // รีเซ็ตรูปก่อนโหลดใหม่
     setLoading(true);
     setError(null);
     setRepoData(null);
-
     try {
       const res = await fetch(`https://api.github.com/repos/${project.repo}`);
       if (!res.ok) throw new Error("ไม่พบ repo นี้");
-      const data = await res.json();
-      setRepoData(data);
+      setRepoData(await res.json());
     } catch (e) {
       setError(e.message);
     } finally {
@@ -55,16 +36,11 @@ export default function App() {
 
   return (
     <div className="portfolio-root">
-
-      <div className="top-label">PROJECTS</div>
-
       <div className="bento">
 
         {/* AVATAR */}
         <div className="card avatar-card">
-          <div className="art-placeholder">
-            <img src={require('./picture/me2.jpg')} className="me-art" alt="Avatar" />
-          </div>
+          <img src={require('./picture/me2.jpg')} className="me-art" alt="Avatar" />
         </div>
 
         {/* PROFILE */}
@@ -76,18 +52,14 @@ export default function App() {
             Crafting Stunning, User-Friendly Web{"\n"}
             Experiences with Passion and Precision
           </p>
-          <p className="profile-quote">
-            "Break things, learn from them, build better."
-          </p>
+          <p className="profile-quote">"Break things, learn from them, build better."</p>
         </div>
 
         {/* ABOUT ME */}
         <div className="card about-card">
           <div className="about-title">It's Me!</div>
           <div className="about-photo-frame">
-            <div className="about-photo-placeholder">
-              <img src={require('./picture/pholova.gif')} alt="Photo" />
-            </div>
+            <img src={require('./picture/ellen-joe-ellen.gif')} alt="Photo" />
           </div>
           <p className="about-text">
             A CS student, my passion lies in the craft of building elegant,
@@ -107,23 +79,22 @@ export default function App() {
               <span className="contact-icon">◉</span>
               <span className="contact-text">tgteuy1@gmail.com</span>
             </a>
-            <a className="contact-item">
+            <div className="contact-item">
               <span className="contact-icon">▣</span>
               <span className="contact-text">0967705364</span>
-            </a>
-            <a className="contact-item" href="https://https://www.facebook.com/teuy.kung.58/.com/users/yourid" target="_blank" rel="noreferrer">
+            </div>
+            <a className="contact-item" href="https://www.facebook.com/teuy.kung.58/" target="_blank" rel="noreferrer">
               <span className="contact-icon">◎</span>
               <span className="contact-text">ทะนากะระ กลิ่นหวล</span>
             </a>
           </div>
         </div>
 
-        {/* NOTE APP — มีปุ่ม + repo preview */}
+        {/* PROJECTS */}
         <div className="card note-app-card">
           <div className="card-label">Featured Project</div>
           <div className="note-title">Project</div>
 
-          {/* ปุ่มเลือกโปรเจกต์ */}
           <div className="btn-row">
             {projects.map((p) => (
               <button
@@ -136,14 +107,9 @@ export default function App() {
             ))}
           </div>
 
-          {/* พื้นที่แสดง GitHub Preview */}
           <div className="repo-preview">
-            {/* ยังไม่ได้กด */}
-            {!selected && (
-              <p className="repo-hint">กดปุ่มด้านบนเพื่อดู repo</p>
-            )}
+            {!selected && <p className="repo-hint">กดปุ่มด้านบนเพื่อดู repo</p>}
 
-            {/* กำลังโหลด */}
             {loading && (
               <div className="repo-loading">
                 <div className="repo-spinner" />
@@ -151,38 +117,24 @@ export default function App() {
               </div>
             )}
 
-            {/* เกิด error */}
-            {error && (
-              <p className="repo-error">⚠ {error}</p>
-            )}
+            {error && <p className="repo-error">⚠ {error}</p>}
 
-            {/* แสดงข้อมูล repo */}
             {repoData && (
               <div className="repo-card">
                 <div className="repo-header">
                   <span className="repo-icon">⬡</span>
-                  <a
-                    className="repo-name"
-                    href={repoData.html_url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a className="repo-name" href={repoData.html_url} target="_blank" rel="noreferrer">
                     {repoData.full_name}
                   </a>
                   <span className="repo-visibility">{repoData.visibility}</span>
                 </div>
-
-                <p className="repo-desc">
-                  {repoData.description || "No description provided."}
-                </p>
-
+                <p className="repo-desc">{repoData.description || "No description provided."}</p>
                 <div className="repo-stats">
                   <span>⭐ {repoData.stargazers_count}</span>
                   <span>👁 {repoData.watchers_count}</span>
                   <span>🍴 {repoData.forks_count}</span>
                   {repoData.language && <span>● {repoData.language}</span>}
                 </div>
-
                 <div className="repo-updated">
                   อัปเดตล่าสุด: {new Date(repoData.updated_at).toLocaleDateString("th-TH")}
                 </div>
@@ -193,16 +145,13 @@ export default function App() {
 
         {/* HIRE ME */}
         <div className="card hire-card">
-          <div className="hire-avatar-mini">
-            <img src={require('./picture/lollipop-candy.gif')} alt="Photo" />
-          </div>
+          <img src={require('./picture/ellen-joe-zenless-zone-zero.gif')} alt="decoration" className="hire-gif" />
         </div>
 
         {/* SKILLS */}
         <div className="card skills-card">
           <div className="card-label">Tech Stack</div>
           <div className="skills-grid">
-
             <div className="skill-group">
               <label>LANGUAGES</label>
               <div className="skill-tags">
@@ -211,7 +160,6 @@ export default function App() {
                 <span className="skill-tag">Python</span>
               </div>
             </div>
-
             <div className="skill-group">
               <label>FRONTEND</label>
               <div className="skill-tags">
@@ -220,15 +168,13 @@ export default function App() {
                 <span className="skill-tag">Bootstrap</span>
               </div>
             </div>
-
             <div className="skill-group">
               <label>BACKEND</label>
               <div className="skill-tags">
                 <span className="skill-tag">NODE.JS</span>
-                <span className="skill-tag">MysQL</span>
+                <span className="skill-tag">MySQL</span>
               </div>
             </div>
-
             <div className="skill-group">
               <label>TOOLS</label>
               <div className="skill-tags">
@@ -238,24 +184,18 @@ export default function App() {
                 <span className="skill-tag">FIGMA</span>
               </div>
             </div>
-
           </div>
         </div>
 
-        {/* GALLERY DROPDOWN */}
-        <div className="card gallery-card">
-          <button
-            className="gallery-toggle"
-            onClick={() => setGalleryOpen(!galleryOpen)}
-          >
-            <span> Transcript </span>
-            <span className={`gallery-arrow ${galleryOpen ? "open" : ""}`}>▾</span>
+        {/* TRANSCRIPT DROPDOWN */}
+        <div className="card transcript-card">
+          <button className="gallery-toggle" onClick={() => setTranscriptOpen(!transcriptOpen)}>
+            <span>📄 Transcript</span>
+            <span className={`gallery-arrow ${transcriptOpen ? "open" : ""}`}>▾</span>
           </button>
-
-          {galleryOpen && (
+          {transcriptOpen && (
             <div className="gallery-panel">
-              {/* เปลี่ยนเป็น: <img src={myImage} alt="my photo" className="a4-image" /> */}
-                <img src={require('./picture/transcript.png')} alt="Photo" className="a4-image" />
+              <img src={require('./picture/transcript.png')} alt="Transcript" className="a4-image" />
             </div>
           )}
         </div>
